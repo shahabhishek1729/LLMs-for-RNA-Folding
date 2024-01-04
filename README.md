@@ -7,7 +7,6 @@ The following defines the model built and trained in the above scripts:
 class Model(nn.Module):
     def __init__(self, dim=320, depth=12, head_size=32, **kwargs):
         super().__init__()
-        #         self.emb = nn.Embedding(4,dim)
         self.emb = nn.Embedding(12, dim)
         self.pos_enc = SinusoidalPosEmb(dim=dim)
         self.transformer = nn.TransformerEncoder(
@@ -31,7 +30,6 @@ class Model(nn.Module):
         x = x0["seq"][:, :Lmax]
 
         pos = torch.arange(Lmax, device=x.device).unsqueeze(0)
-        #         print(f"By this point we have a shape of {pos.shape}")
         pos = self.pos_enc(pos)
         x = self.emb(x)
         x = x + pos
